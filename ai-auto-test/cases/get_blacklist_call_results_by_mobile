@@ -39,13 +39,16 @@ if __name__ == '__main__':
             comments = 'Fail to run test case.'
             quit_test(test_res, comments)
 
+        rep = r.json()
+        logger.debug(rep)
+
         rc = r.status_code
         logging.debug('Staus Code: %d' % rc)
         if rc == 200:
             test_res = 'PASS'
         else:
             test_res = 'FAIL'
-            comments = 'Status Code is %d.' % rc
+            comments = '%s(%d).' % (rep['error'], rc)
         quit_test(test_res, comments)
     except Exception, e:
         logging.error(e)
