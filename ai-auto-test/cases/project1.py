@@ -29,7 +29,22 @@ HEADERS = {'Accept': 'application/json'}
 #
 #def get_blacklist()
 #
-#def add_blacklist()
+def add_blacklist(data_lst):
+    '''
+    Test for POST /api/blacklist/add
+    '''
+
+    url = '%s/api/%s/add' % (URL, API['blacklist'])
+    logging.info(url)
+    try:
+        r = requests.post(url, headers=HEADERS, json=data_lst)
+
+        return r
+
+    except Exception, e:
+        logging.error(e)
+        return None
+
 
 #def download_blacklist_template()
 #
@@ -62,8 +77,32 @@ def get_blacklist_call_results(*mobile):
 
 
 if __name__ == '__main__':
-    r = get_blacklist_call_results()
+    from pprint import pprint
+    single_account = [
+        {
+            "name": "彭程",
+            "sex": 1,
+            "mobile": "15711362928"
+        }
+    ]
+
+    multi_accounts = [
+        {
+            "name": "name",
+            "sex": 1,
+            "mobile": "15711362928"
+        },
+        {
+            "name": "名字",
+            "sex": 0,
+            "mobile": "12345678901"
+        }
+    ]
+
+    r = add_blacklist(single_account)
+    #r = add_blacklist(multi_accounts)
+
     if r is None:
         sys.exit(-1)
 
-    logging.debug(r.json())
+    pprint(r.json())
