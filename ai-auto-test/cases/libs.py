@@ -7,14 +7,14 @@ import os
 
 
 class Logger():
-    def __init__(self, log_fn, mode):
+    def __init__(self, log_fn):
         self.logger = logging.getLogger()
         self.logger.setLevel(logging.DEBUG)
 
-        fmt = '%(asctime)s - [%(levelname)s] - %(message)s'
+        fmt = '[%(levelname)s][%(module)s][%(lineno)d] %(asctime)s - %(message)s'
         formatter = logging.Formatter(fmt)
 
-        fh =  logging.FileHandler(log_fn, mode=mode)
+        fh =  logging.FileHandler(log_fn, mode='w')
         fh.setFormatter(formatter)
         fh.setLevel(logging.DEBUG)
 
@@ -44,8 +44,8 @@ class Logger():
 
 
 def quit_test(log, test_res, comments=''):
-    log.d('Test Result: %s' % test_res)
-    log.d('Comments: %s' % comments)
+    logging.debug('Test Result: %s' % test_res)
+    logging.debug('Comments: %s' % comments)
 
 
 if __name__ == '__main__':
