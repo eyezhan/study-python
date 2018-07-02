@@ -21,9 +21,6 @@ URL = 'http://%s:%d' % (data['hostname'], data['port'])
 API = data['api']
 
 
-#def play_audio()
-#
-
 # Blacklist Controller
 def get_blacklist(url):
     '''
@@ -91,6 +88,17 @@ def get_blacklist_call_results(mobile):
     return r
 
 
+# Login Controller
+def login(url):
+    '''
+    Test for POST /api/login.
+    '''
+
+    r = post_api(url)
+
+    return r
+
+
 if __name__ == '__main__':
     from pprint import pprint
     #single_account = [
@@ -126,10 +134,16 @@ if __name__ == '__main__':
     #ids = ["12345", "67890"]
     #r = delete_blacklist_by_ids(ids)
 
-    r = download_blacklist_template()
-    print r
+    #r = download_blacklist_template()
+    #print r
+
+    url = '%s/api/%s' % (URL, API['login'])
+    email = 'admin'
+    password = '123'
+    url += '?email=%s&password=%s' % (email, password)
+    r = login(url)
 
     if r is None:
         sys.exit(-1)
 
-    #pprint(r.json())
+    pprint(r.json())
