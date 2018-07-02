@@ -177,4 +177,3 @@ if __name__ == '__main__':
         sys.exit(-1)
 
     #pprint(r.json())
-    print r.status_code
