@@ -102,6 +102,19 @@ def get_blacklist_call_results(mobile):
     return r
 
 
+# Call Recoed Controller
+def get_call_record_by_call_id(call_id):
+    '''
+    Test for GET /api/callRecord/{callId}.
+    '''
+
+    url = '%s/api/%s/%s' % (URL, API['callRecord'], call_id)
+
+    r = get_api(url)
+
+    return r
+
+
 # Login Controller
 def login(url):
     '''
@@ -171,9 +184,12 @@ if __name__ == '__main__':
 
     #r = logout()
 
-    r = play_audio("1")
+    #r = play_audio("1")
+
+    r = get_call_record_by_call_id("1")
 
     if r is None:
         sys.exit(-1)
 
-    #pprint(r.json())
+    pprint(r.json())
+    #print r.status_code
