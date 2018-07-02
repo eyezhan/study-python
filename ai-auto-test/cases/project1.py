@@ -28,8 +28,17 @@ HEADERS = {'Accept': 'application/json'}
 # Blacklist Controller
 #def delete_blacklist()
 #
-#def get_blacklist()
-#
+def get_blacklist(url):
+    '''
+    Test for GET /api/blacklist
+    Get blacklist when assigning page number and page size.
+    '''
+
+    r = get_api(url)
+
+    return r
+
+
 def add_blacklist(data_lst):
     '''
     Test for POST /api/blacklist/add
@@ -66,31 +75,34 @@ def get_blacklist_call_results(mobile):
 
 if __name__ == '__main__':
     from pprint import pprint
-    single_account = [
-        {
-            "name": "彭程",
-            "sex": 1,
-            "mobile": "15711362928"
-        }
-    ]
+    #single_account = [
+    #    {
+    #        "name": "彭程",
+    #        "sex": 1,
+    #        "mobile": "15711362928"
+    #    }
+    #]
 
-    multi_accounts = [
-        {
-            "name": "name",
-            "sex": 1,
-            "mobile": "15711362928"
-        },
-        {
-            "name": "名字",
-            "sex": 0,
-            "mobile": "12345678901"
-        }
-    ]
+    #multi_accounts = [
+    #    {
+    #        "name": "name",
+    #        "sex": 1,
+    #        "mobile": "15711362928"
+    #    },
+    #    {
+    #        "name": "名字",
+    #        "sex": 0,
+    #        "mobile": "12345678901"
+    #    }
+    #]
 
     #r = add_blacklist(single_account)
-    r = add_blacklist(multi_accounts)
+    #r = add_blacklist(multi_accounts)
     #r = get_blacklist_call_results('15711362928')
     #r = get_blacklist_call_results('25711362928')
+    url = '%s/api/%s' % (URL, API['blacklist'])
+    url += '?pageNo=1&pageSize=20'
+    r = get_blacklist(url)
 
     if r is None:
         sys.exit(-1)
