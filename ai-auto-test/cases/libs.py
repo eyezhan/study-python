@@ -18,6 +18,18 @@ def get_api(url):
         return None
 
 
+def post_api(url, **kwargs):
+    try:
+        r = requests.post(url, **kwargs)
+
+        return r
+
+    except Exception, e:
+        logging.error(e)
+
+        return None
+
+
 def quit_test(log, test_res, comments=''):
     logging.debug('Test Result: %s' % test_res)
     logging.debug('Comments: %s' % comments)
