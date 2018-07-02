@@ -115,6 +115,20 @@ def get_call_record_by_call_id(call_id):
     return r
 
 
+# Call Task Controller
+def delete_call_task_by_ids(data_lst):
+    '''
+    Test for DELETE /api/callTask.
+    Delete call task by ids.
+    '''
+
+    url = '%s/api/%s' % (URL, API['callTask'])
+
+    r = delete_api(url, json=data_lst)
+
+    return r
+
+
 # Login Controller
 def login(url):
     '''
@@ -186,7 +200,10 @@ if __name__ == '__main__':
 
     #r = play_audio("1")
 
-    r = get_call_record_by_call_id("1")
+    #r = get_call_record_by_call_id("1")
+
+    ids = ["1", "2"]
+    r = delete_call_task_by_ids(ids)
 
     if r is None:
         sys.exit(-1)
