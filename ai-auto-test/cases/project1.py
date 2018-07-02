@@ -19,18 +19,15 @@ data = json.load(open(conf_fn, 'r'))
 
 URL = 'http://%s:%d' % (data['hostname'], data['port'])
 API = data['api']
-HEADERS = {'Accept': 'application/json'}
 
 
 #def play_audio()
 #
 
 # Blacklist Controller
-#def delete_blacklist()
-#
 def get_blacklist(url):
     '''
-    Test for GET /api/blacklist
+    Test for GET /api/blacklist.
     Get blacklist when assigning page number and page size.
     '''
 
@@ -41,7 +38,7 @@ def get_blacklist(url):
 
 def add_blacklist(data_lst):
     '''
-    Test for POST /api/blacklist/add
+    Test for POST /api/blacklist/add.
     '''
 
     url = '%s/api/%s/add' % (URL, API['blacklist'])
@@ -51,15 +48,26 @@ def add_blacklist(data_lst):
     return r
 
 
-#def download_blacklist_template()
-#
+def download_blacklist_template():
+    '''
+    Test for GET /api/blacklist/downloadTemplate.
+    Download blacklist template.
+    '''
+
+    url = '%s/api/%s/downloadTemplate' % (URL, API['blacklist'])
+
+    r = get_api(url, headers={"Accept": "application/vnd.ms-excel"})
+
+    return r
+
+
 #def export_blacklist()
 #
 #def import_blacklist()
 #
 def delete_blacklist_by_ids(data_lst):
     '''
-    Test for DELETE /api/blacklist and /api/blacklist/{mobile}
+    Test for DELETE /api/blacklist and /api/blacklist/{mobile}.
     Get blacklist call results by mobile.
     '''
 
@@ -72,7 +80,7 @@ def delete_blacklist_by_ids(data_lst):
 
 def get_blacklist_call_results(mobile):
     '''
-    Test for GET /api/blacklist and /api/blacklist/{mobile}
+    Test for GET /api/blacklist and /api/blacklist/{mobile}.
     Get blacklist call results by mobile.
     '''
 
@@ -115,10 +123,13 @@ if __name__ == '__main__':
     #url += '?pageNo=1&pageSize=20'
     #r = get_blacklist(url)
 
-    ids = ["12345", "67890"]
-    r = delete_blacklist_by_ids(ids)
+    #ids = ["12345", "67890"]
+    #r = delete_blacklist_by_ids(ids)
+
+    r = download_blacklist_template()
+    print r
 
     if r is None:
         sys.exit(-1)
 
-    pprint(r.json())
+    #pprint(r.json())

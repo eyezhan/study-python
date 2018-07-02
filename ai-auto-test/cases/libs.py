@@ -6,10 +6,14 @@ import logging
 import requests
 
 
-def get_api(url):
+HEADER = {'Accept': 'application/json'}
+
+
+def get_api(url, headers=HEADER):
     logging.info(url)
+    logging.info(headers)
     try:
-        r = requests.get(url)
+        r = requests.get(url, headers=headers)
 
         return r
 
@@ -19,12 +23,13 @@ def get_api(url):
         return None
 
 
-def post_api(url, **kwargs):
+def post_api(url, headers=HEADER, **kwargs):
     logging.info(url)
+    logging.info(headers)
     if kwargs:
         logging.info(kwargs)
     try:
-        r = requests.post(url, **kwargs)
+        r = requests.post(url, headers=headers, **kwargs)
 
         return r
 
@@ -34,12 +39,13 @@ def post_api(url, **kwargs):
         return None
 
 
-def delete_api(url, **kwargs):
+def delete_api(url, headers=HEADER, **kwargs):
     logging.info(url)
+    logging.info(headers)
     if kwargs:
         logging.info(kwargs)
     try:
-        r = requests.delete(url, **kwargs)
+        r = requests.delete(url, headers=headers, **kwargs)
 
         return r
 
