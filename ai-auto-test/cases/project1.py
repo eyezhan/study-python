@@ -2,6 +2,7 @@
 # coding=utf-8
 
 
+from libs import *
 import logging
 import argparse
 import json
@@ -62,45 +63,43 @@ def get_blacklist_call_results(*mobile):
 
     comments = ''
     url = '%s/api/%s' % (URL, API['blacklist'])
+    print url
     if mobile:
         url += '/%s' % mobile
     logging.info(url)
 
-    try:
-        r = requests.get(url, headers=HEADERS)
+    r = get_api(url)
 
-        return r
-
-    except Exception, e:
-        logging.error(e)
-        return None
+    return r
 
 
 if __name__ == '__main__':
     from pprint import pprint
-    single_account = [
-        {
-            "name": "彭程",
-            "sex": 1,
-            "mobile": "15711362928"
-        }
-    ]
+    #single_account = [
+    #    {
+    #        "name": "彭程",
+    #        "sex": 1,
+    #        "mobile": "15711362928"
+    #    }
+    #]
 
-    multi_accounts = [
-        {
-            "name": "name",
-            "sex": 1,
-            "mobile": "15711362928"
-        },
-        {
-            "name": "名字",
-            "sex": 0,
-            "mobile": "12345678901"
-        }
-    ]
+    #multi_accounts = [
+    #    {
+    #        "name": "name",
+    #        "sex": 1,
+    #        "mobile": "15711362928"
+    #    },
+    #    {
+    #        "name": "名字",
+    #        "sex": 0,
+    #        "mobile": "12345678901"
+    #    }
+    #]
 
-    r = add_blacklist(single_account)
+    #r = add_blacklist(single_account)
     #r = add_blacklist(multi_accounts)
+    r = get_blacklist_call_results('15711362928')
+    #r = get_blacklist_call_results('25711362928')
 
     if r is None:
         sys.exit(-1)

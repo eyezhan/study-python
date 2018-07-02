@@ -3,6 +3,19 @@
 
 
 import logging
+import requests
+
+
+def get_api(url):
+    try:
+        r = requests.get(url)
+
+        return r
+
+    except Exception, e:
+        logging.error(e)
+
+        return None
 
 
 def quit_test(log, test_res, comments=''):
