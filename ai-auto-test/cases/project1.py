@@ -52,14 +52,13 @@ def add_blacklist(data_lst):
 #def delete_blacklist_by_id()
 
 
-def get_blacklist_call_results(*mobile):
+def get_blacklist_call_results(mobile):
     '''
     Test for GET /api/blacklist and /api/blacklist/{mobile}
+    Get blacklist call results by moble.
     '''
 
-    comments = ''
     url = '%s/api/%s' % (URL, API['blacklist'])
-    print url
     if mobile:
         url += '/%s' % mobile
     logging.info(url)
