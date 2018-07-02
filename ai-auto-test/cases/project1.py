@@ -21,6 +21,20 @@ URL = 'http://%s:%d' % (data['hostname'], data['port'])
 API = data['api']
 
 
+# Audio Controller
+def play_audio(attach_id):
+    '''
+    Test for GET /api/audio/{attachId}.
+    Play audio {attachId}.
+    '''
+
+    url = '%s/api/%s/%s' % (URL, API['audio'], attach_id)
+
+    r = get_api(url)
+
+    return r
+
+
 # Blacklist Controller
 def get_blacklist(url):
     '''
@@ -155,9 +169,11 @@ if __name__ == '__main__':
     #url += '?email=%s&password=%s' % (email, password)
     #r = login(url)
 
-    r = logout()
+    #r = logout()
+
+    r = play_audio("1")
 
     if r is None:
         sys.exit(-1)
 
-    pprint(r.json())
+    #pprint(r.json())
