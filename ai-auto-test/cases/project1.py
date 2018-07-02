@@ -36,7 +36,6 @@ def add_blacklist(data_lst):
     '''
 
     url = '%s/api/%s/add' % (URL, API['blacklist'])
-    logging.info(url)
 
     r = post_api(url, json=data_lst)
 
@@ -58,10 +57,7 @@ def get_blacklist_call_results(mobile):
     Get blacklist call results by moble.
     '''
 
-    url = '%s/api/%s' % (URL, API['blacklist'])
-    if mobile:
-        url += '/%s' % mobile
-    logging.info(url)
+    url = '%s/api/%s/%s' % (URL, API['blacklist'], mobile)
 
     r = get_api(url)
 

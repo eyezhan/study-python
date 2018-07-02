@@ -7,6 +7,7 @@ import requests
 
 
 def get_api(url):
+    logging.info(url)
     try:
         r = requests.get(url)
 
@@ -19,6 +20,9 @@ def get_api(url):
 
 
 def post_api(url, **kwargs):
+    logging.info(url)
+    if kwargs:
+        logging.info(kwargs)
     try:
         r = requests.post(url, **kwargs)
 
@@ -30,6 +34,6 @@ def post_api(url, **kwargs):
         return None
 
 
-def quit_test(log, test_res, comments=''):
+def quit_test(test_res, comments=''):
     logging.debug('Test Result: %s' % test_res)
     logging.debug('Comments: %s' % comments)
