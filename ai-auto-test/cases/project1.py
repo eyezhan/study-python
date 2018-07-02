@@ -99,6 +99,18 @@ def login(url):
     return r
 
 
+def logout():
+    '''
+    Test for GET /api/logout.
+    '''
+
+    url = '%s/api/%s' % (URL, API['logout'])
+
+    r = get_api(url)
+
+    return r
+
+
 if __name__ == '__main__':
     from pprint import pprint
     #single_account = [
@@ -137,11 +149,13 @@ if __name__ == '__main__':
     #r = download_blacklist_template()
     #print r
 
-    url = '%s/api/%s' % (URL, API['login'])
-    email = 'admin'
-    password = '123'
-    url += '?email=%s&password=%s' % (email, password)
-    r = login(url)
+    #url = '%s/api/%s' % (URL, API['login'])
+    #email = 'admin'
+    #password = '123'
+    #url += '?email=%s&password=%s' % (email, password)
+    #r = login(url)
+
+    r = logout()
 
     if r is None:
         sys.exit(-1)
