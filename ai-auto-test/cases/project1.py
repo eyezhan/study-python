@@ -57,13 +57,23 @@ def add_blacklist(data_lst):
 #
 #def import_blacklist()
 #
-#def delete_blacklist_by_id()
+def delete_blacklist_by_ids(data_lst):
+    '''
+    Test for DELETE /api/blacklist and /api/blacklist/{mobile}
+    Get blacklist call results by mobile.
+    '''
+
+    url = '%s/api/%s' % (URL, API['blacklist'])
+
+    r = delete_api(url, json=data_lst)
+
+    return r
 
 
 def get_blacklist_call_results(mobile):
     '''
     Test for GET /api/blacklist and /api/blacklist/{mobile}
-    Get blacklist call results by moble.
+    Get blacklist call results by mobile.
     '''
 
     url = '%s/api/%s/%s' % (URL, API['blacklist'], mobile)
@@ -100,9 +110,13 @@ if __name__ == '__main__':
     #r = add_blacklist(multi_accounts)
     #r = get_blacklist_call_results('15711362928')
     #r = get_blacklist_call_results('25711362928')
-    url = '%s/api/%s' % (URL, API['blacklist'])
-    url += '?pageNo=1&pageSize=20'
-    r = get_blacklist(url)
+
+    #url = '%s/api/%s' % (URL, API['blacklist'])
+    #url += '?pageNo=1&pageSize=20'
+    #r = get_blacklist(url)
+
+    ids = ["12345", "67890"]
+    r = delete_blacklist_by_ids(ids)
 
     if r is None:
         sys.exit(-1)
