@@ -129,6 +129,16 @@ def delete_call_task_by_ids(data_lst):
     return r
 
 
+def get_call_task(url):
+    '''
+    Test for GET/api/callTask.
+    '''
+
+    r = get_api(url)
+
+    return r
+
+
 # Login Controller
 def login(url):
     '''
@@ -202,8 +212,12 @@ if __name__ == '__main__':
 
     #r = get_call_record_by_call_id("1")
 
-    ids = ["1", "2"]
-    r = delete_call_task_by_ids(ids)
+    #ids = ["1", "2"]
+    #r = delete_call_task_by_ids(ids)
+
+    url = '%s/api/%s' % (URL, API['callTask'])
+    url += '?pageSize=3&pageNo=1'
+    r = get_call_task(url)
 
     if r is None:
         sys.exit(-1)
