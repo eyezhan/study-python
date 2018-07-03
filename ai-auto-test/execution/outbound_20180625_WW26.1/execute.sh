@@ -11,8 +11,7 @@ if [ $# -gt 1 ]; then
     exit -1
 fi
 
-#export CASE_DIR=/c/workspace/ai-auto-test/cases
-export CASE_DIR=/c/workspace/ai-auto-test/tests
+export CASE_DIR=/c/workspace/ai-auto-test/cases
 
 if [ -z $1 ]; then
     test_plan='test.plan'
@@ -23,6 +22,7 @@ fi
 log=`echo $test_plan | awk -F'.' '{print $1}'`.log
 > $log
 for i in `cat test.plan`; do
+    i=`echo $i | tr -d '\r'`
     echo "================================="
     echo Test Case: $i
     $CASE_DIR/$i $i

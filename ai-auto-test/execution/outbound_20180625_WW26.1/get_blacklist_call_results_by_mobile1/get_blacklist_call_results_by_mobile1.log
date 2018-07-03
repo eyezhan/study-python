@@ -1,9 +1,0 @@
-2018-06-26 11:19:59,253 [ERROR][project1][52] - global name 'urls' is not defined
-2018-06-26 11:19:59,253 [DEBUG][libs][47] - Test Result: FAIL
-2018-06-26 11:19:59,253 [DEBUG][libs][48] - Comments: Fail to run test case.
-2018-06-26 11:19:59,253 [ERROR][get_blacklist_call_results_by_mobile1][51] - 'NoneType' object has no attribute 'status_code'
-2018-06-26 11:20:57,217 [DEBUG][connectionpool][205] - Starting new HTTP connection (1): 60.205.4.180:9010
-2018-06-26 11:20:57,252 [DEBUG][connectionpool][393] - http://60.205.4.180:9010 "GET /api/blacklist/15711362928 HTTP/1.1" 200 None
-2018-06-26 11:20:57,260 [DEBUG][get_blacklist_call_results_by_mobile1][43] - Staus Code: 200
-2018-06-26 11:20:57,262 [DEBUG][libs][47] - Test Result: PASS
-2018-06-26 11:20:57,262 [DEBUG][libs][48] - Comments: 
