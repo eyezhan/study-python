@@ -2,37 +2,63 @@
 
 usage()
 {
-    echo "usage: ./execute.sh [test plan]"
-    echo "Default test plan is 'test.plan'."
+cat << EOF
+This script execute test case(s) list in test plan file.
+Return value: 0        OK
+              Other    Error
+
+OPTIONS:
+    -h    Show help message.
+    -p    Test plan.
+EOF
 }
 
-if [ $# -gt 1 ]; then
-    usage
-    exit -1
+while getopts "hp:" OPTION
+do
+    case $OPTION in
+        h)
+            usage
+            exit 1
+            ;;
+        p)
+            test_plan=$OPTARG
+            ;;
+     esac
+done
+
+if [ -z $test_plan ]; then
+    test_plan=test.plan
 fi
+echo Test Plan: $test_plan
 
-export CASE_DIR=/c/workspace/ai-auto-test/cases
+export CASE_DIR=/c/workspace/ai-auto-test/tests
 
-if [ -z $1 ]; then
-    test_plan='test.plan'
-else
-    test_plan=$1
+log_path=logs/`date +'%Y%m%d_%H%M%S'`
+if [ ! -d $log_path ]; then
+    mkdir -p $log_path
 fi
-
+echo Log Path: $log_path
 log=`echo $test_plan | awk -F'.' '{print $1}'`.log
 > $log
 for i in `cat test.plan`; do
     i=`echo $i | tr -d '\r'`
     echo "================================="
     echo Test Case: $i
-    $CASE_DIR/$i $i
+    $CASE_DIR/$i $log_path/$i
     retval=$?
     if [ $retval -eq 0 ]; then
-        test_res=`grep 'Test Result' $i/$i.log | tail -1 | awk '{print $NF}'`
-        comments=`grep 'Comments' $i/$i.log | tail -1 | awk -F'Comments: ' '{print $NF}'`
+        test_res=`grep 'Test Result' $log_path/$i/$i.log | tail -1 | awk '{print $NF}'`
+        comments=`grep 'Comments' $log_path/$i/$i.log | tail -1 | awk -F'Comments: ' '{print $NF}'`
     else
         test_res='FAIL'
         comments='Fail to run test case.'
     fi
     echo "$i|$test_res|$comments" >> $log
 done
+
+echo "================================="
+if [ ! -d reports ]; then
+    mkdir reports
+fi
+report_fn=reports/`basename $log_path`.xlsx
+python gen_test_report.py -p $test_plan -r $log_path -o $report_fn
