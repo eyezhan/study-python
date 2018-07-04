@@ -17,7 +17,7 @@ def get_api(url, headers=HEADER):
 
         return r
 
-    except Exception, e:
+    except Exception as e:
         logging.error(e)
 
         return None
@@ -33,7 +33,7 @@ def post_api(url, headers=HEADER, **kwargs):
 
         return r
 
-    except Exception, e:
+    except Exception as e:
         logging.error(e)
 
         return None
@@ -49,7 +49,7 @@ def delete_api(url, headers=HEADER, **kwargs):
 
         return r
 
-    except Exception, e:
+    except Exception as e:
         logging.error(e)
 
         return None
