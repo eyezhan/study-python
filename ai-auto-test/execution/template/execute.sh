@@ -31,7 +31,7 @@ if [ -z $test_plan ]; then
 fi
 echo Test Plan: $test_plan
 
-export CASE_DIR=/c/workspace/ai-auto-test/tests
+export CASE_DIR=../../cases
 
 log_path=logs/`date +'%Y%m%d_%H%M%S'`
 if [ ! -d $log_path ]; then
