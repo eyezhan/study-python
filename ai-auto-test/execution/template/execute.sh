@@ -9,7 +9,7 @@ Return value: 0        OK
 
 OPTIONS:
     -h    Show help message.
-    -p    Test plan.
+    -p    Test plan. Default: test.plan
 EOF
 }
 
@@ -26,12 +26,16 @@ do
      esac
 done
 
+# Update repo to latest version.
+git pull
+
+# Set default test plan.
 if [ -z $test_plan ]; then
     test_plan=test.plan
 fi
 echo Test Plan: $test_plan
 
-export CASE_DIR=../../cases
+CASE_DIR=../../cases
 
 log_path=logs/`date +'%Y%m%d_%H%M%S'`
 if [ ! -d $log_path ]; then
@@ -40,6 +44,8 @@ fi
 echo Log Path: $log_path
 log=`echo $test_plan | awk -F'.' '{print $1}'`.log
 > $log
+
+# Execute test cases listed in test plan.
 for i in `cat test.plan`; do
     i=`echo $i | tr -d '\r'`
     echo "================================="
@@ -56,6 +62,7 @@ for i in `cat test.plan`; do
     echo "$i|$test_res|$comments" >> $log
 done
 
+# Generate excel test report.
 echo "================================="
 if [ ! -d reports ]; then
     mkdir reports
