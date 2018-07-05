@@ -2,16 +2,16 @@
 # coding=utf-8
 
 '''
-=== Case Description ===
+Case Description
 Pre-Condition:
     客户A在黑名单中，且有至少一条外呼结果
 Case Name:
     查看黑名单客户外呼结果
-Test Step:
+Test Steps:
     根据提供的黑名单手机号码，查看该客户外呼结果
-Expected Result:
+Expected Results:
     API返回状态码为200
-=== End Description ===
+End Description
 '''
 
 from libs import quit_test
