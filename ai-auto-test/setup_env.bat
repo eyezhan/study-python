@@ -1,0 +1,5 @@
+Set-ExecutionPolicy Bypass -Scope Process -Force; iex ((New-Object System.Net.WebClient).DownloadString('https://chocolatey.org/install.ps1'))
+choco install -y git
+choco install -y python2
+pip install requests
+pip install xlsxwriter
