@@ -28,7 +28,8 @@ import logging.config
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser(description='Run test case: get call results of valid black mobile.')
+    parser = argparse.ArgumentParser(
+        description='Run test case: get call results of valid black mobile.')
     parser.add_argument('log_path', nargs='?', default='.', help='Log path.')
 
     args = parser.parse_args()
