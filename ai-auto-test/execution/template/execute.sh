@@ -26,6 +26,9 @@ do
      esac
 done
 
+export AI_AUTO_ROOT=`readlink -f ../../`
+echo AI Auto Root Directory: $AI_AUTO_ROOT
+
 # Update repo to latest version.
 git pull
 
@@ -35,7 +38,7 @@ if [ -z $test_plan ]; then
 fi
 echo Test Plan: $test_plan
 
-CASE_DIR=../../cases
+CASE_DIR=$AI_AUTO_ROOT/cases
 
 log_path=logs/`date +'%Y%m%d_%H%M%S'`
 if [ ! -d $log_path ]; then
@@ -50,7 +53,9 @@ for i in `cat test.plan`; do
     i=`echo $i | tr -d '\r'`
     echo "================================="
     echo Test Case: $i
-    $CASE_DIR/$i $log_path/$i
+    test_case=`find $CASE_DIR -name $i`
+    echo $test_case $log_path/$i
+    $test_case $log_path/$i
     retval=$?
     if [ $retval -eq 0 ]; then
         test_res=`grep 'Test Result' $log_path/$i/$i.log | tail -1 | awk '{print $NF}'`
