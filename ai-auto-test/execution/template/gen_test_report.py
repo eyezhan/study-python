@@ -84,33 +84,36 @@ def gen_report(test_plan, results_dir, report_fn):
     ws.set_column('%s:%s' % (res_col, res_col), 10)
     ws.set_zoom(85)
 
-    data_lst = [list() for i in range(len(headings))]
-    # row = 1
-    for test_case in case_lst:
-        # tc_info = []
+    case_data = dict()
+    case_path = os.path.join(os.environ['AI_AUTO_ROOT'], 'cases')
+    for root, dirs, files in os.walk(case_path):
+        for f in files:
+            case_data[f] = os.path.join(root, f)
 
-        # Parse test case information.
-        case_script = os.path.join(os.pardir, os.pardir, 'cases', test_case)
+    data_lst = [list() for i in range(len(case_lst))]
+    for i in range(len(case_lst)):
+        # Init row data
+        for j in range(len(headings) - 2):
+            data_lst[i].append('')
+
+        test_case = case_lst[i]
+        case_script = case_data[test_case]
         content = open(case_script, 'r').read()
         s = re.search('Case Description(.*)End Description', content, re.S)
         if s:
             tc_des = s.groups()[0].strip()
-        s = re.search(
-            'Pre-Condition:(.*)Case Name:(.*)Test Steps:(.*)Expected Results:(.*)',
-            tc_des,
-            re.S)
-        if s:
-            for i in range(len(s.groups())):
-                c = [unicode(line.strip(), 'utf-8')
-                     for line in s.groups()[i].split('\n')]
-                data_lst[i].append('\n'.join(c).strip())
-                # tc_info.append('\n'.join(c).strip())
-        else:
-            for i in range(4):
-                data_lst[i].append('')
-                # tc_info.append('')
+            s = re.search(
+                'Case Name:(.*)Pre-Condition:(.*)Test Steps:(.*)Expected Results:(.*)',
+                tc_des,
+                re.S)
+            if s:
+                for j in range(len(s.groups())):
+                    c = [unicode(line.strip(), 'utf-8')
+                         for line in s.groups()[j].split('\n')]
+                    data_lst[i][j] = '\n'.join(c).strip()
+        if len(data_lst[i][0]) == 0:
+            data_lst[i][0] = test_case
 
-        # Parse test results.
         case_log = os.path.join(results_dir, test_case, test_case + '.log')
         comments = ''
         if os.path.exists(case_log):
@@ -131,10 +134,6 @@ def gen_report(test_plan, results_dir, report_fn):
         else:
             test_res = 'fail'
             comments = 'Fail to run test case.'
-
-        test_res = test_res.strip().lower()
-        data_lst[4].append(test_res)
-        data_lst[5].append(comments)
         # tc_info.append(test_res)
         # tc_info.append(comments)
         # if test_res == 'pass':
@@ -149,7 +148,7 @@ def gen_report(test_plan, results_dir, report_fn):
 
     # Write test case information and results to result sheet.
     for i in range(len(data_lst)):
-        ws.write_column(1, i, data_lst[i], result_fmt)
+        ws.write_row(i + 1, 0, data_lst[i], result_fmt)
 
     # Write summary table of test results.
     summary_ws.write_formula(1, 0, "=_xlfn.COUNTIF('%s'!%s:%s, \"pass\")" %
@@ -162,6 +161,8 @@ def gen_report(test_plan, results_dir, report_fn):
                              (sheet_name, res_col, res_col), summary_num_fmt)
     summary_ws.write_formula(1, 4, '=%s2/%s2' %
                              (chr(0 + 65), chr(3 + 65)), percent_fmt)
+
+    wb.close()
 
 
 if __name__ == '__main__':
@@ -184,15 +185,14 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
-    cmd = 'ln %s logging.json' % os.path.join(
-        os.getcwd(), os.pardir, os.pardir, 'cases', 'logging.json')
-    os.popen(cmd)
+    config_path = os.path.abspath(os.path.join(os.pardir, os.pardir, 'configs'))
+    log_conf_fn = os.path.join(config_path, 'logging.json')
 
     results_dir = args.results_dir
     log_fn = os.path.join(
         results_dir, '%s.log' %
         os.path.basename(results_dir))
-    conf_data = json.load(open('logging.json', 'r'))
+    conf_data = json.load(open(log_conf_fn, 'r'))
     conf_data['handlers']['file_handler']['filename'] = log_fn
     try:
         logging.config.dictConfig(conf_data)
