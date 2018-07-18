@@ -13,8 +13,11 @@ import time
 
 
 # Configuration
-root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
-conf_fn = os.path.join(root_dir, 'configs', '%s.conf' % os.path.splitext(os.path.basename(__file__))[0])
+config_path = os.path.join(os.environ['AI_AUTO_ROOT'], 'configs')
+conf_fn = os.path.join(
+    config_path, '%s.conf' %
+    os.path.splitext(
+        os.path.basename(__file__))[0])
 data = json.load(open(conf_fn, 'r'))
 
 URL = 'http://%s:%d' % (data['hostname'], data['port'])
@@ -131,7 +134,7 @@ def delete_call_task_by_ids(data_lst):
 
 def get_call_task(url):
     '''
-    Test for GET/api/callTask.
+    Test for GET /api/callTask.
     '''
 
     r = get_api(url)
