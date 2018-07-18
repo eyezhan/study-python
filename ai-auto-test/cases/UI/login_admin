@@ -1,6 +1,22 @@
 #!/usr/bin/env python
 # coding=utf-8
 
+'''
+Case Description
+Case Name:
+    管理用户登录验证
+Pre-Condition:
+    已有管理账号
+Test Steps:
+    1. 打开登录页面
+    2. 输入管理账号密码
+    3. 点击登录按钮
+Expected Results:
+    1. 登录成功
+    2. 页面切换至账号信息界面
+End Description
+'''
+
 from login_logout import *
 import argparse
 
