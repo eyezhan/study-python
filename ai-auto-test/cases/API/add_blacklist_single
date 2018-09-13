@@ -1,0 +1,63 @@
+#!/usr/bin/env python
+# coding=utf-8
+
+
+from libs import quit_test
+from project1 import add_blacklist
+import argparse
+import json
+import logging
+import logging.config
+import os
+
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser(description='Process some integers.')
+    parser.add_argument('log_path', nargs='?', default='.', help='Log path.')
+
+    args = parser.parse_args()
+
+    # Log.
+    log_path = args.log_path
+    if not os.path.exists(log_path):
+        os.makedirs(log_path)
+    log_fn = os.path.join(log_path, '%s.log' % os.path.basename(__file__))
+    conf_fn = os.path.abspath(
+        os.path.join(
+            os.path.dirname(__file__),
+            "logging.json"))
+    conf_data = json.load(open(conf_fn, 'r'))
+    conf_data['handlers']['file_handler']['filename'] = log_fn
+    logging.config.dictConfig(conf_data)
+    logger = logging.getLogger()
+
+    # Blacklist data
+    data_lst = [{
+        "name": "黑名单",
+        "sex": 1,
+        "mobile": "15711362928"
+    }]
+    logger.info(data_lst)
+
+    comments = ''
+    try:
+        r = add_blacklist(data_lst)
+        if r is None:
+            test_res = 'FAIL'
+            comments = 'Fail to run test case.'
+            quit_test(test_res, comments)
+
+        logger.info(r.json())
+        rc = r.status_code
+        logger.debug('Staus Code: %d' % rc)
+        if rc == 200:
+            test_res = 'PASS'
+        else:
+            test_res = 'FAIL'
+            comments = 'Status Code is %d.' % rc
+        quit_test(test_res, comments)
+    except Exception as e:
+        logger.error(e)
+        test_res = 'FAIL'
+        comments = 'Fail to run test case.'
+        quit_test(test_res, comments)

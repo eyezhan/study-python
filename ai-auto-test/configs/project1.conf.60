@@ -7,7 +7,7 @@
         "login": "login",
         "logout": "logout"
     },
-    "hostname": "47.93.141.158",
+    "hostname": "60.205.4.180",
     "port": 9010,
     "port_front": 4000,
     "username_by": "name",
@@ -24,16 +24,6 @@
     "logout_value": "user-dropdown",
     "user_container_by": "class name",
     "user_container_value": "avatar-container",
-    "call_mgt_by": "class name",
-    "call_mgt_value": "icon-waihuguanli",
-    "call_history_by": "class name",
-    "call_history_value": "icon-waihujieguo",
-    "ch_search_bars_by": "class name",
-    "ch_search_bars_value": "el-input__inner",
-    "ch_btns_by": "class name",
-    "ch_btns_value": "el-button",
-    "ch_table_by": "class name",
-    "ch_table_value": "el-table_1_column_14",
     "conf_mgt_by": "class name",
     "conf_mgt_value": "icon-peizhiguanli"
 }
